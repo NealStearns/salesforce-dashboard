@@ -1,0 +1,43 @@
+{
+  "name": "Salesforce Dashboard",
+  "image": "mcr.microsoft.com/devcontainers/python:1-3.12-bullseye",
+
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "20"
+    }
+  },
+
+  "forwardPorts": [8000, 5173],
+
+  "portsAttributes": {
+    "8000": {
+      "label": "Backend API",
+      "onAutoForward": "silent",
+      "visibility": "private"
+    },
+    "5173": {
+      "label": "Frontend Dashboard",
+      "onAutoForward": "openBrowser",
+      "visibility": "private"
+    }
+  },
+
+  "postCreateCommand": "bash .devcontainer/setup.sh",
+  "postStartCommand": "bash .devcontainer/start.sh",
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "bradlc.vscode-tailwindcss"
+      ],
+      "settings": {
+        "python.defaultInterpreterPath": "/workspaces/salesforce-dashboard/backend/.venv/bin/python"
+      }
+    }
+  }
+}
