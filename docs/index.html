@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Salesforce Dashboard</title>
+  <meta name="description" content="A modern dashboard for visualizing Salesforce Opportunity data, built with FastAPI and React.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Hero -->
+  <header class="hero">
+    <nav class="nav">
+      <div class="nav-brand">📊 SF Dashboard</div>
+      <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#setup">Setup</a>
+        <a href="https://github.com/neal-stearns_hpeprod/salesforce-dashboard" class="btn btn-outline" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </nav>
+    <div class="hero-content">
+      <h1>Salesforce Dashboard</h1>
+      <p class="hero-subtitle">A modern, real-time analytics dashboard for Salesforce Opportunity data.<br>Built with FastAPI, React, TypeScript &amp; Recharts.</p>
+      <div class="hero-actions">
+        <a href="#setup" class="btn btn-primary">Get Started</a>
+        <a href="https://github.com/neal-stearns_hpeprod/salesforce-dashboard" class="btn btn-ghost" target="_blank" rel="noopener">View Source &rarr;</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Features -->
+  <section id="features" class="section">
+    <div class="container">
+      <h2>Features</h2>
+      <p class="section-subtitle">Everything you need to understand your Salesforce pipeline at a glance.</p>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🔐</div>
+          <h3>Salesforce OAuth 2.0</h3>
+          <p>Secure Web Server Flow authentication. Connect once, your session stays active with automatic token handling.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📈</div>
+          <h3>KPI Summary</h3>
+          <p>At-a-glance metrics: open pipeline value, average deal size, won and lost totals for the current quarter.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📊</div>
+          <h3>Pipeline Charts</h3>
+          <p>Interactive bar charts showing monthly pipeline trends, and pie charts breaking down opportunities by stage.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📝</div>
+          <h3>Opportunity Table</h3>
+          <p>Full paginated, sortable, filterable table of all opportunities. Filter by stage, amount, or owner.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3>FastAPI Backend</h3>
+          <p>Async Python backend with SOQL-powered queries. Auto-generated OpenAPI docs at <code>/docs</code>.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🐳</div>
+          <h3>Docker Ready</h3>
+          <p>One-command startup with Docker Compose. Backend + frontend containers pre-configured and ready to go.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Architecture -->
+  <section id="architecture" class="section section-alt">
+    <div class="container">
+      <h2>Architecture</h2>
+      <p class="section-subtitle">Clean separation of concerns with a modern, async stack.</p>
+      <div class="arch-diagram">
+        <div class="arch-box">
+          <div class="arch-label">Frontend</div>
+          <div class="arch-tech">React 18 · TypeScript<br>Vite 5 · Tailwind CSS<br>Recharts</div>
+          <div class="arch-port">:5173</div>
+        </div>
+        <div class="arch-arrow">&rarr;</div>
+        <div class="arch-box">
+          <div class="arch-label">Backend</div>
+          <div class="arch-tech">FastAPI · Python 3.12<br>httpx · Pydantic<br>uvicorn</div>
+          <div class="arch-port">:8000</div>
+        </div>
+        <div class="arch-arrow">&rarr;</div>
+        <div class="arch-box arch-box-ext">
+          <div class="arch-label">Salesforce</div>
+          <div class="arch-tech">REST API v59.0<br>OAuth 2.0<br>SOQL Queries</div>
+        </div>
+      </div>
+
+      <div class="api-table-wrap">
+        <h3>API Endpoints</h3>
+        <table class="api-table">
+          <thead>
+            <tr><th>Method</th><th>Path</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><span class="badge get">GET</span></td><td>/auth/login</td><td>Redirect to Salesforce OAuth</td></tr>
+            <tr><td><span class="badge get">GET</span></td><td>/auth/callback</td><td>OAuth callback handler</td></tr>
+            <tr><td><span class="badge get">GET</span></td><td>/auth/status</td><td>Check authentication status</td></tr>
+            <tr><td><span class="badge post">POST</span></td><td>/auth/logout</td><td>Clear session</td></tr>
+            <tr><td><span class="badge get">GET</span></td><td>/api/dashboard/kpis</td><td>KPI summary metrics</td></tr>
+            <tr><td><span class="badge get">GET</span></td><td>/api/dashboard/stages</td><td>Opportunities by stage</td></tr>
+            <tr><td><span class="badge get">GET</span></td><td>/api/dashboard/pipeline</td><td>Pipeline over time</td></tr>
+            <tr><td><span class="badge get">GET</span></td><td>/api/opportunities</td><td>Paginated opportunity list</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Setup -->
+  <section id="setup" class="section">
+    <div class="container">
+      <h2>Getting Started</h2>
+      <p class="section-subtitle">Up and running in under 5 minutes.</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h3>Create a Salesforce Connected App</h3>
+            <p>In Salesforce Setup &rarr; App Manager &rarr; New Connected App. Enable OAuth, set callback URL to <code>http://localhost:8000/auth/callback</code>, and select the <strong>api</strong> and <strong>refresh_token</strong> scopes.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h3>Clone &amp; Configure</h3>
+            <pre><code>git clone https://github.com/neal-stearns_hpeprod/salesforce-dashboard.git
+cd salesforce-dashboard
+cp .env.sample .env
+# Edit .env with your SF_CLIENT_ID and SF_CLIENT_SECRET</code></pre>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <h3>Run with Docker</h3>
+            <pre><code>docker compose up --build</code></pre>
+            <p>Or start backend and frontend manually:</p>
+            <pre><code># Backend
+cd backend &amp;&amp; pip install -r requirements.txt
+uvicorn app.main:app --reload --port 8000
+
+# Frontend
+cd frontend &amp;&amp; npm install &amp;&amp; npm run dev</code></pre>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">4</div>
+          <div class="step-content">
+            <h3>Open &amp; Connect</h3>
+            <p>Visit <strong>http://localhost:5173</strong> and click <em>Connect to Salesforce</em>. You'll be redirected to authorize, then returned to your dashboard.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tech Stack -->
+  <section class="section section-alt">
+    <div class="container">
+      <h2>Tech Stack</h2>
+      <div class="tech-grid">
+        <div class="tech-item"><strong>Backend</strong><br>Python 3.12 · FastAPI · httpx · Pydantic</div>
+        <div class="tech-item"><strong>Frontend</strong><br>React 18 · TypeScript · Vite 5 · Tailwind 3</div>
+        <div class="tech-item"><strong>Charts</strong><br>Recharts (bar, pie, line)</div>
+        <div class="tech-item"><strong>Auth</strong><br>Salesforce OAuth 2.0 Web Server Flow</div>
+        <div class="tech-item"><strong>DevOps</strong><br>Docker · Docker Compose</div>
+        <div class="tech-item"><strong>API Docs</strong><br>Auto-gen OpenAPI / Swagger</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 Salesforce Dashboard &mdash; <a href="https://github.com/neal-stearns_hpeprod/salesforce-dashboard" target="_blank" rel="noopener">GitHub Repository</a></p>
+    </div>
+  </footer>
+</body>
+</html>
