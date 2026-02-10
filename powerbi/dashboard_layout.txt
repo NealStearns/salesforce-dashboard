@@ -1,0 +1,113 @@
+# ═══════════════════════════════════════════════════════════════
+# Power BI Dashboard Layout Guide
+# Salesforce Opportunity Dashboard
+# ═══════════════════════════════════════════════════════════════
+
+
+## DATA MODEL RELATIONSHIPS
+## ─────────────────────────────────────────────────────────────
+## Set these in Model View after importing data:
+##
+## Opportunities[CloseDate]  →  DateTable[Date]     (Many:1)
+## Opportunities[Account.Id] →  Accounts[Id]        (Many:1)
+## Opportunities[Owner.Id]   →  Users[Id]           (Many:1)
+
+
+## PAGE 1: EXECUTIVE DASHBOARD
+## ═══════════════════════════════════════════════════════════════
+
+### Row 1 — KPI Cards (top of page, full width)
+###
+### ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐
+### │ Total    │ │ Won This │ │ Win      │ │ Avg Deal │ │ Weighted │
+### │ Pipeline │ │ Quarter  │ │ Rate     │ │ Size     │ │ Pipeline │
+### │ $4.2M    │ │ $1.8M    │ │ 42%      │ │ $85K     │ │ $2.1M    │
+### └──────────┘ └──────────┘ └──────────┘ └──────────┘ └──────────┘
+###
+### Visual: Card
+### Values: [Total Pipeline], [Won This Quarter], [Win Rate],
+###         [Avg Deal Size], [Weighted Pipeline]
+
+
+### Row 2 — Charts
+###
+### ┌─────────────────────────────┐ ┌─────────────────────────────┐
+### │   Pipeline Over Time        │ │   Opportunities by Stage    │
+### │   (Clustered Bar Chart)     │ │   (Donut Chart)             │
+### │                             │ │                             │
+### │   X-axis: MonthYear         │ │   Legend: StageName         │
+### │   Y-axis: SUM(Amount)       │ │   Values: Count of Id       │
+### │   Legend: ForecastCategory   │ │                             │
+### └─────────────────────────────┘ └─────────────────────────────┘
+
+
+### Row 3 — More Detail
+###
+### ┌─────────────────────────────┐ ┌─────────────────────────────┐
+### │   Won vs Lost by Quarter    │ │   Top 10 Accounts           │
+### │   (Stacked Bar Chart)       │ │   (Horizontal Bar Chart)    │
+### │                             │ │                             │
+### │   X: QuarterLabel           │ │   Y-axis: Account.Name      │
+### │   Y: SUM(Amount)            │ │   X-axis: SUM(Amount)       │
+### │   Legend: IsWon (T/F)       │ │   Filter: Top 10 by Amount  │
+### └─────────────────────────────┘ └─────────────────────────────┘
+
+
+## PAGE 2: PIPELINE DETAIL
+## ═══════════════════════════════════════════════════════════════
+
+### Slicers (top bar):
+### ┌──────────┐ ┌──────────────┐ ┌───────────┐ ┌──────────────┐
+### │ Stage    │ │ Owner Name   │ │ Industry  │ │ Close Date   │
+### │ Dropdown │ │ Dropdown     │ │ Dropdown  │ │ Date Range   │
+### └──────────┘ └──────────────┘ └───────────┘ └──────────────┘
+
+### Main content:
+### ┌─────────────────────────────────────────────────────────────┐
+### │   Opportunity Table (Table Visual)                         │
+### │                                                           │
+### │   Columns: Name, Account.Name, StageName, Amount,         │
+### │            CloseDate, Probability, Owner.Name, Type        │
+### │                                                           │
+### │   Conditional formatting:                                 │
+### │     - Amount: Data bars (blue)                             │
+### │     - StageName: Background color by stage                │
+### │     - Probability: Data bars (green)                      │
+### └─────────────────────────────────────────────────────────────┘
+###
+### ┌─────────────────────────────┐ ┌─────────────────────────────┐
+### │  Amount by Lead Source      │ │  Pipeline by Forecast Cat.  │
+### │  (Pie Chart)                │ │  (Funnel Chart)             │
+### │  Legend: LeadSource          │ │  Category: ForecastCategory │
+### │  Values: SUM(Amount)        │ │  Values: SUM(Amount)        │
+### └─────────────────────────────┘ └─────────────────────────────┘
+
+
+## PAGE 3: REP PERFORMANCE
+## ═══════════════════════════════════════════════════════════════
+
+### ┌─────────────────────────────────────────────────────────────┐
+### │   Revenue by Rep (Horizontal Bar Chart)                    │
+### │   Y-axis: Owner.Name                                      │
+### │   X-axis: [Closed Won Revenue]                            │
+### │   Tooltip: [Opportunity Count], [Win Rate]                │
+### └─────────────────────────────────────────────────────────────┘
+###
+### ┌─────────────────────────────┐ ┌─────────────────────────────┐
+### │   Win Rate by Rep           │ │   Avg Days to Close by Rep  │
+### │   (Column Chart)            │ │   (Column Chart)            │
+### │   X: Owner.Name             │ │   X: Owner.Name             │
+### │   Y: [Win Rate]             │ │   Y: [Avg Days to Close]    │
+### └─────────────────────────────┘ └─────────────────────────────┘
+
+
+## THEME / COLORS
+## ─────────────────────────────────────────────────────────────
+## Primary:     #3b82f6 (blue)
+## Success:     #10b981 (green)  → Won
+## Danger:      #ef4444 (red)    → Lost
+## Warning:     #f59e0b (amber)  → At risk
+## Purple:      #8b5cf6          → Metrics
+## Background:  #f8fafc
+## Text:        #1e293b
+## Muted text:  #64748b

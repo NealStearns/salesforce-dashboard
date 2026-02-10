@@ -1,0 +1,69 @@
+{
+  "name": "SalesforceDashboard",
+  "dataColors": [
+    "#3b82f6",
+    "#10b981",
+    "#f59e0b",
+    "#ef4444",
+    "#8b5cf6",
+    "#ec4899",
+    "#06b6d4",
+    "#84cc16",
+    "#f97316",
+    "#6366f1"
+  ],
+  "background": "#f8fafc",
+  "foreground": "#1e293b",
+  "tableAccent": "#3b82f6",
+  "good": "#10b981",
+  "neutral": "#f59e0b",
+  "bad": "#ef4444",
+  "maximum": "#3b82f6",
+  "center": "#f59e0b",
+  "minimum": "#ef4444",
+  "textClasses": {
+    "callout": {
+      "fontSize": 28,
+      "fontFace": "Segoe UI Semibold"
+    },
+    "title": {
+      "fontSize": 14,
+      "fontFace": "Segoe UI Semibold"
+    },
+    "header": {
+      "fontSize": 12,
+      "fontFace": "Segoe UI"
+    },
+    "label": {
+      "fontSize": 10,
+      "fontFace": "Segoe UI"
+    }
+  },
+  "visualStyles": {
+    "*": {
+      "*": {
+        "background": [
+          {
+            "color": {"solid": {"color": "#ffffff"}},
+            "transparency": 0
+          }
+        ],
+        "border": [
+          {
+            "color": {"solid": {"color": "#e2e8f0"}},
+            "radius": 8
+          }
+        ],
+        "dropShadow": [
+          {
+            "show": true,
+            "color": {"solid": {"color": "#000000"}},
+            "position": "Outer",
+            "preset": "BottomRight",
+            "transparency": 90
+          }
+        ]
+      }
+    }
+  }
+}

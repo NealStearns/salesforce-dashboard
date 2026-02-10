@@ -1,0 +1,120 @@
+# ═══════════════════════════════════════════════════════════════
+# DAX Measures for Salesforce Opportunity Dashboard
+# ═══════════════════════════════════════════════════════════════
+#
+# After importing data into Power BI, create these measures
+# in the Opportunities table (Modeling → New Measure).
+#
+# Copy each measure below into Power BI.
+# ═══════════════════════════════════════════════════════════════
+
+
+# ─── KPI Measures ─────────────────────────────────────────────
+
+# 1. Total Pipeline (open opportunities)
+Total Pipeline = 
+    CALCULATE(
+        SUM(Opportunities[Amount]),
+        Opportunities[IsClosed] = FALSE
+    )
+
+# 2. Closed Won Revenue
+Closed Won Revenue = 
+    CALCULATE(
+        SUM(Opportunities[Amount]),
+        Opportunities[IsWon] = TRUE
+    )
+
+# 3. Closed Lost Amount
+Closed Lost Amount = 
+    CALCULATE(
+        SUM(Opportunities[Amount]),
+        Opportunities[IsClosed] = TRUE,
+        Opportunities[IsWon] = FALSE
+    )
+
+# 4. Win Rate (percentage)
+Win Rate = 
+    VAR _won = CALCULATE(COUNTROWS(Opportunities), Opportunities[IsWon] = TRUE)
+    VAR _closed = CALCULATE(COUNTROWS(Opportunities), Opportunities[IsClosed] = TRUE)
+    RETURN
+        IF(_closed > 0, DIVIDE(_won, _closed), BLANK())
+
+# 5. Average Deal Size
+Avg Deal Size = 
+    AVERAGE(Opportunities[Amount])
+
+# 6. Average Days to Close
+Avg Days to Close = 
+    CALCULATE(
+        AVERAGEX(
+            Opportunities,
+            DATEDIFF(Opportunities[CreatedDate], Opportunities[CloseDate], DAY)
+        ),
+        Opportunities[IsClosed] = TRUE
+    )
+
+# 7. Opportunity Count
+Opportunity Count = 
+    COUNTROWS(Opportunities)
+
+# 8. Open Opportunity Count
+Open Opportunities = 
+    CALCULATE(
+        COUNTROWS(Opportunities),
+        Opportunities[IsClosed] = FALSE
+    )
+
+# 9. Won This Quarter
+Won This Quarter = 
+    CALCULATE(
+        SUM(Opportunities[Amount]),
+        Opportunities[IsWon] = TRUE,
+        FILTER(
+            ALL(DateTable),
+            DateTable[IsCurrentQuarter] = TRUE
+        )
+    )
+
+# 10. Lost This Quarter
+Lost This Quarter = 
+    CALCULATE(
+        SUM(Opportunities[Amount]),
+        Opportunities[IsClosed] = TRUE,
+        Opportunities[IsWon] = FALSE,
+        FILTER(
+            ALL(DateTable),
+            DateTable[IsCurrentQuarter] = TRUE
+        )
+    )
+
+# 11. Weighted Pipeline
+Weighted Pipeline = 
+    CALCULATE(
+        SUMX(
+            Opportunities,
+            Opportunities[Amount] * Opportunities[Probability] / 100
+        ),
+        Opportunities[IsClosed] = FALSE
+    )
+
+# 12. Pipeline Coverage Ratio (pipeline / quota target)
+# Adjust the target value to your team's quarterly quota
+Pipeline Coverage = 
+    VAR _pipeline = [Total Pipeline]
+    VAR _target = 2000000
+    RETURN
+        DIVIDE(_pipeline, _target)
+
+
+# ─── Formatting Notes ─────────────────────────────────────────
+#
+# Measure                | Format          | Example
+# -----------------------|-----------------|-------------
+# Total Pipeline         | $#,##0          | $4,250,000
+# Closed Won Revenue    | $#,##0          | $1,800,000
+# Win Rate              | 0.0%            | 42.5%
+# Avg Deal Size         | $#,##0          | $85,000
+# Avg Days to Close     | #,##0           | 47
+# Opportunity Count     | #,##0           | 500
+# Pipeline Coverage     | 0.0x            | 2.1x
