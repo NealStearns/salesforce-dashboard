@@ -16,7 +16,15 @@ class Settings(BaseSettings):
     frontend_url: str = "http://localhost:5173"
     debug: bool = True
 
+    # Demo mode — auto-enabled when SF credentials are empty
+    demo_mode: bool = False
+
     model_config = {"env_file": ".env"}
+
+    @property
+    def is_demo(self) -> bool:
+        """True when demo mode is forced OR no Salesforce credentials are set."""
+        return self.demo_mode or not (self.sf_client_id and self.sf_client_secret)
 
 
 @lru_cache()

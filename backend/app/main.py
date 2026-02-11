@@ -29,4 +29,13 @@ app.include_router(
 
 @app.get("/health")
 async def health_check():
-    return {"status": "ok"}
+    return {"status": "ok", "demo_mode": settings.is_demo}
+
+
+@app.on_event("startup")
+async def startup_event():
+    if settings.is_demo:
+        print("\n" + "=" * 60)
+        print("  🎯 DEMO MODE — serving sample data (no Salesforce needed)")
+        print("  Set SF_CLIENT_ID and SF_CLIENT_SECRET to connect to Salesforce")
+        print("=" * 60 + "\n")

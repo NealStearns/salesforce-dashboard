@@ -14,6 +14,8 @@ settings = get_settings()
 @router.get("/login")
 async def login():
     """Redirect the user to Salesforce for authorization."""
+    if settings.is_demo:
+        return RedirectResponse(settings.frontend_url)
     url = get_authorization_url()
     return RedirectResponse(url)
 
@@ -21,6 +23,8 @@ async def login():
 @router.get("/callback")
 async def callback(request: Request, code: str | None = None, error: str | None = None):
     """Handle the OAuth callback from Salesforce."""
+    if settings.is_demo:
+        return RedirectResponse(settings.frontend_url)
     if error:
         return RedirectResponse(f"{settings.frontend_url}?error={error}")
     if not code:
@@ -50,6 +54,8 @@ async def callback(request: Request, code: str | None = None, error: str | None 
 @router.get("/status")
 async def auth_status(request: Request):
     """Check whether the current session is authenticated."""
+    if settings.is_demo:
+        return {"authenticated": True, "demo": True, "user": "Demo User"}
     session_id = request.cookies.get("session_id")
     session = get_session(session_id) if session_id else None
     return {"authenticated": session is not None}
