@@ -99,6 +99,22 @@ def extract_opportunities(sf: Salesforce) -> pd.DataFrame:
     return df
 
 
+def extract_products(sf: Salesforce) -> pd.DataFrame:
+    """Pull product line items joined to opportunities for product filtering."""
+    soql = """
+    SELECT
+        OpportunityId, Opportunity.Name,
+        Product2.Name, Product2.Family,
+        Quantity, TotalPrice, UnitPrice
+    FROM OpportunityLineItem
+    WHERE Opportunity.Amount != null
+    ORDER BY OpportunityId
+    """
+    df = query_to_dataframe(sf, soql)
+    print(f"  Product line items: {len(df)} records")
+    return df
+
+
 def extract_accounts(sf: Salesforce) -> pd.DataFrame:
     """Pull account dimension table."""
     soql = """

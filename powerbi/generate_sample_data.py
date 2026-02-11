@@ -60,6 +60,14 @@ LEAD_SOURCES = [
 
 TYPES = ["New Customer", "Existing Customer - Upgrade", "Existing Customer - Replacement", "Existing Customer - Downgrade"]
 
+PRODUCTS = {
+    "Compute": ["ProLiant DL380", "ProLiant DL360", "Synergy 480", "Edgeline EL8000", "Apollo 6500"],
+    "Storage": ["Alletra 9000", "Alletra 6000", "StoreOnce 6600", "MSA 2060", "Nimble HF60"],
+    "Networking": ["Aruba CX 8360", "Aruba CX 6300", "Aruba AP-635", "Aruba 2930F", "Aruba SD-WAN"],
+    "Software": ["GreenLake Platform", "OneView", "InfoSight", "Zerto", "Data Services Cloud Console"],
+    "Services": ["Pointnext Advisory", "Pointnext Operational", "GreenLake Managed", "Financial Services", "Education Services"],
+}
+
 FIRST_NAMES = ["Sarah", "James", "Maria", "David", "Jennifer", "Michael", "Lisa", "Robert", "Emily", "William", "Jessica", "Daniel", "Ashley", "Chris", "Amanda"]
 LAST_NAMES = ["Johnson", "Smith", "Williams", "Brown", "Jones", "Garcia", "Miller", "Davis", "Rodriguez", "Martinez", "Wilson", "Anderson", "Thomas", "Taylor", "Moore"]
 
@@ -143,6 +151,13 @@ def generate_opportunities(df_accounts: pd.DataFrame, df_users: pd.DataFrame) ->
         opp_name_prefix = random.choice(["Expansion", "Renewal", "New Deal", "Upgrade", "Implementation", "Migration", "Platform"])
         opp_name = f"{account_names[account_id]} - {opp_name_prefix}"
 
+        # Product assignment
+        product_family = random.choice(list(PRODUCTS.keys()))
+        product_name = random.choice(PRODUCTS[product_family])
+
+        # Custom Opportunity ID (auto-number style)
+        opportunity_id = f"OPP-{i + 1:05d}"
+
         opps.append({
             "Id": f"006{i:012d}",
             "Name": opp_name,
@@ -166,6 +181,9 @@ def generate_opportunities(df_accounts: pd.DataFrame, df_users: pd.DataFrame) ->
             "Account.Name": account_names[account_id],
             "Account.Industry": account_industries[account_id],
             "Campaign.Name": random.choice([None, "Q1 Campaign", "Partner Push", "Webinar Series", "Trade Show 2025", "Digital Ads"]),
+            "ProductName": product_name,
+            "ProductFamily": product_family,
+            "OpportunityID": opportunity_id,
         })
 
     df = pd.DataFrame(opps)
