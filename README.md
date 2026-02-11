@@ -2,6 +2,10 @@
 
 A modern dashboard for visualizing Salesforce Opportunity data. Built with **FastAPI** (Python) and **React + TypeScript** (Vite).
 
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/NealStearns/salesforce-dashboard?quickstart=1)
+
+> **One-click demo:** Click the button above to launch a fully configured dev environment in your browser. The backend (FastAPI) and frontend (React) start automatically — no local setup required. The Codespace will auto-stop after 30 minutes of inactivity.
+
 ## Architecture
 
 ```
@@ -40,7 +44,7 @@ A modern dashboard for visualizing Salesforce Opportunity data. Built with **Fas
 ### 1. Clone & configure
 
 ```bash
-git clone https://github.com/neal-stearns_hpeprod/salesforce-dashboard.git
+git clone https://github.com/NealStearns/salesforce-dashboard.git
 cd salesforce-dashboard
 cp .env.sample .env
 # Edit .env with your Salesforce Connected App credentials
